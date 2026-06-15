@@ -1,23 +1,44 @@
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=test
-      - DB_HOST=db
-      - DB_USER=postgres
-      - DB_PASSWORD=1234
-      - DB_NAME=ecommerce
-    depends_on:
-      - db
 
   db:
     image: postgres:14
+    container_name: ecommerce-db
     restart: always
+
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: ecommerce
+
     ports:
       - "5432:5432"
+
+    volumes:
+      - ./db-init:/docker-entrypoint-initdb.d   # ✅ roda init.sql automaticamente
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: ecommerce-backend
+    restart: always
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      DB_HOST: db
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: ecommerce
+
+    depends_on:
+      db:
+        condition: service_healthy   # ✅ espera o banco ficar pronto
+
+    command: sh -c "npm start"   # ✅ pode evoluir depois
