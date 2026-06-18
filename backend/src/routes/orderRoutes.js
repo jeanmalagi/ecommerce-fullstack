@@ -14,6 +14,8 @@ import {
   authMiddleware,
 } from "../middlewares/authMiddleware.js";
 
+import adminMiddleware from "../middlewares/adminMiddleware.js";
+
 //
 // ✅ Criar pedido
 //
@@ -51,6 +53,7 @@ router.get(
 router.get(
   "/admin/all",
   authMiddleware,
+  adminMiddleware,
   getAllOrders
 );
 
@@ -61,6 +64,7 @@ router.get(
 router.put(
   "/admin/:id",
   authMiddleware,
+  adminMiddleware,
   updateOrderStatus
 );
 

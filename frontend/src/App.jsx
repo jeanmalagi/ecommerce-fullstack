@@ -30,7 +30,10 @@ import AdminStock
   from "./pages/AdminStock";
   
 import ProductDetails
-  from "./pages/ProductDetails";  
+  from "./pages/ProductDetails";
+
+import AdminRoute from "./components/AdminRoute";
+import PrivateRoute from "./PrivateRoute";  
 
 function App() {
   return (
@@ -50,54 +53,61 @@ function App() {
       {/* ✅ Carrinho */}
       <Route
         path="/cart"
-        element={<Cart />}
+        element={<PrivateRoute><Cart /></PrivateRoute>}
       />
 
       {/* ✅ Pedidos */}
       <Route
         path="/orders"
-        element={<Orders />}
+        element={<PrivateRoute><Orders /></PrivateRoute>}
       />
 
-      {/* ✅ Admin */}
-      <Route
-        path="/admin"
-        element={<Admin />}
-      />
-
-      {/* ✅ Admin produtos */}
-      <Route
-        path="/admin/products"
-        element={<AdminProducts />}
-      />
-
-      {/* ✅ Criar produto */}
-      <Route
-        path="/admin/products/new"
-        element={<CreateProduct />}
-      />
-
-      {/* ✅ Editar produto */}
-      <Route
-        path="/admin/products/edit/:id"
-        element={<EditProduct />}
-      />
-
+      {/* ✅ Detalhes do Pedido */}
       <Route
         path="/orders/:id"
-        element={<OrderDetails />}
+        element={<PrivateRoute><OrderDetails /></PrivateRoute>}
       />
-      <Route
-        path="/admin/orders"
-        element={<AdminOrders />}
-      />
-      <Route
-        path="/admin/stock"
-        element={<AdminStock />}
-      />
+
+      {/* ✅ Detalhes do Produto */}
       <Route
         path="/products/:id"
         element={<ProductDetails />}
+      />
+
+      {/* ✅ Admin - Dashboard */}
+      <Route
+        path="/admin"
+        element={<AdminRoute><Admin /></AdminRoute>}
+      />
+
+      {/* ✅ Admin - Produtos */}
+      <Route
+        path="/admin/products"
+        element={<AdminRoute><AdminProducts /></AdminRoute>}
+      />
+
+      {/* ✅ Admin - Criar produto */}
+      <Route
+        path="/admin/products/new"
+        element={<AdminRoute><CreateProduct /></AdminRoute>}
+      />
+
+      {/* ✅ Admin - Editar produto */}
+      <Route
+        path="/admin/products/edit/:id"
+        element={<AdminRoute><EditProduct /></AdminRoute>}
+      />
+
+      {/* ✅ Admin - Pedidos */}
+      <Route
+        path="/admin/orders"
+        element={<AdminRoute><AdminOrders /></AdminRoute>}
+      />
+
+      {/* ✅ Admin - Estoque */}
+      <Route
+        path="/admin/stock"
+        element={<AdminRoute><AdminStock /></AdminRoute>}
       />
       {/* ✅ Redirect fallback */}
       <Route

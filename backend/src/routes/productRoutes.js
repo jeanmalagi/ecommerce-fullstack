@@ -16,6 +16,8 @@ import {
   authMiddleware,
 } from "../middlewares/authMiddleware.js";
 
+import adminMiddleware from "../middlewares/adminMiddleware.js";
+
 //
 // ✅ Listar produtos
 //
@@ -41,6 +43,7 @@ router.get(
 router.post(
   "/",
   authMiddleware,
+  adminMiddleware,
   upload.single("image"),
   createProduct
 );
@@ -52,6 +55,7 @@ router.post(
 router.put(
   "/:id",
   authMiddleware,
+  adminMiddleware,
   upload.single("image"),
   updateProduct
 );
@@ -62,6 +66,7 @@ router.put(
 
 router.delete(
   "/:id",
+  adminMiddleware,
   authMiddleware,
   deleteProduct
 );

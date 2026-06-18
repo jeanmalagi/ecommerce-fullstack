@@ -10,9 +10,12 @@ import {
   authMiddleware,
 } from "../middlewares/authMiddleware.js";
 
+import adminMiddleware from "../middlewares/adminMiddleware.js";
+
 router.get(
   "/",
   authMiddleware,
+  adminMiddleware,
   getDashboardData
 );
 

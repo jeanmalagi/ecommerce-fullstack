@@ -1,17 +1,21 @@
 import { Navigate } from "react-router-dom";
 
 export default function AdminRoute({ children }) {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const userString = localStorage.getItem("user");
 
-  // ✅ Não logado
-  if (!user) {
-    return <Navigate to="/" />;
+  if (!userString) {
+    return <Navigate to="/" replace />;
   }
 
-  // ✅ Não é admin
-  if (!user.is_admin) {
-    return <Navigate to="/products" />;
-  }
+  try {
+    const user = JSON.parse(userString);
 
-  return children;
+    if (!user.is_admin) {
+      return <Navigate to="/products" replace />;
+    }
+
+    return children;
+  } catch {
+    return <Navigate to="/" replace />;
+  }
 }
