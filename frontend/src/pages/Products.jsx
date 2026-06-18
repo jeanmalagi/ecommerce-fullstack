@@ -615,15 +615,22 @@ const grid = {
   justifyContent: "flex-start",
 };
 
+
 const card = {
   backgroundColor: "#fff",
   borderRadius: "12px",
-  padding: "15px",
-  boxShadow:
-    "0 2px 10px rgba(0,0,0,0.08)",
-  width: "260px",
+  overflow: "hidden",
+  boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
   display: "flex",
   flexDirection: "column",
+  minHeight: "480px",
+};
+
+const actions = {
+  display: "flex",
+  gap: "10px",
+  padding: "15px",
+  marginTop: "auto",
 };
 
 const clickArea = {
@@ -638,29 +645,50 @@ const productImage = {
   marginBottom: "12px",
 };
 
+
 const categoryStyle = {
   backgroundColor: "#f1f1f1",
   padding: "6px 10px",
   borderRadius: "6px",
   fontSize: "12px",
   width: "fit-content",
-  marginBottom: "10px",
+  margin: "0 15px 10px",
 };
 
+const content = {
+  flex: 1,
+};
+
+const footer = {
+  padding: "15px",
+  marginTop: "auto",
+}
+
 const productName = {
-  marginBottom: "8px",
+  padding: "15px 15px 5px",
+  minHeight: "70px",
+  display: "-webkit-box",
+  WebkitLineClamp: 2,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
 };
 
 const description = {
   color: "#666",
   fontSize: "14px",
-  marginBottom: "12px",
+  padding: "0 15px",
+  minHeight: "70px",
+  display: "-webkit-box",
+  WebkitLineClamp: 3,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
 };
 
 const price = {
   color: "#ee4d2d",
   fontWeight: "bold",
   fontSize: "18px",
+  padding: "0 15px",
 };
 
 const stock = {
@@ -668,6 +696,7 @@ const stock = {
   marginBottom: "15px",
   color: "#666",
   fontSize: "14px",
+  padding: "0 15px",
 };
 
 const button = {

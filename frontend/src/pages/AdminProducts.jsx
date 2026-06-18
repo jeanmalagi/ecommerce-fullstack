@@ -1,54 +1,57 @@
 import { useEffect, useState } from "react";
-
 import { api } from "../services/api";
-
 import Navbar from "../components/Navbar";
-
 import ConfirmModal from "../components/ConfirmModal";
+import { toast } from "react-toastify";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
   const [selectedProductId, setSelectedProductId] = useState(null);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   // ✅ Buscar produtos
   const loadProducts = async () => {
     try {
       const res = await api.get("/products");
-
       setProducts(res.data);
     } catch (err) {
       console.error(err);
+      toast.error("Erro ao carregar produtos");
     }
   };
 
-   
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadProducts();
   }, []);
 
   // ✅ Abrir modal exclusão
   const handleOpenDelete = (id) => {
     setSelectedProductId(id);
-
     setShowDeleteModal(true);
   };
 
   // ✅ Confirmar exclusão
   const handleDelete = async () => {
     try {
+      setLoadingDelete(true);
+
       await api.delete(`/products/${selectedProductId}`);
 
-      loadProducts();
+      // ✅ Remove da lista (sem reload)
+      setProducts((prev) => prev.filter((p) => p.id !== selectedProductId));
 
+      // ✅ Feedback
+      toast.success("Produto excluído com sucesso!");
+
+      // ✅ Fecha modal
       setShowDeleteModal(false);
+
     } catch (err) {
       console.error(err);
-
-      alert("Erro ao excluir produto");
+      toast.error("Erro ao excluir produto");
+    } finally {
+      setLoadingDelete(false);
     }
   };
 
@@ -72,6 +75,7 @@ export default function AdminProducts() {
         <div style={grid}>
           {products.map((p) => (
             <div key={p.id} style={card}>
+
               {/* ✅ Imagem */}
               <img
                 src={
@@ -102,6 +106,7 @@ export default function AdminProducts() {
                 >
                   ✏️ Editar
                 </button>
+
                 <button
                   style={deleteBtn}
                   onClick={() => handleOpenDelete(p.id)}
@@ -122,6 +127,7 @@ export default function AdminProducts() {
         message="Deseja realmente excluir este produto?"
         onConfirm={handleDelete}
         onCancel={() => setShowDeleteModal(false)}
+        loading={loadingDelete} // ✅ opcional se quiser mostrar loader
       />
     </>
   );
@@ -165,6 +171,8 @@ const card = {
   borderRadius: "12px",
   overflow: "hidden",
   boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
+  display: "flex",
+  flexDirection: "column",
 };
 
 const image = {
@@ -175,6 +183,11 @@ const image = {
 
 const name = {
   padding: "15px 15px 5px",
+  minHeight: "60px",
+  display: "-webkit-box",
+  WebkitLineClamp: 2,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
 };
 
 const price = {
@@ -193,6 +206,7 @@ const actions = {
   display: "flex",
   gap: "10px",
   padding: "15px",
+  marginTop: "auto",
 };
 
 const editBtn = {
