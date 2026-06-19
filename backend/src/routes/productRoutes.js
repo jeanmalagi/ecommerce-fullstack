@@ -66,8 +66,8 @@ router.put(
 
 router.delete(
   "/:id",
-  adminMiddleware,
   authMiddleware,
+  adminMiddleware,
   deleteProduct
 );
 
