@@ -1,5 +1,8 @@
 import pool from "../database/db.js";
 
+const DEFAULT_PRODUCT_IMAGE =
+  "/uploads/default-product.svg";
+
 //
 // ✅ Criar produto
 //
@@ -13,13 +16,15 @@ export const createProduct =
         price,
         stock,
         category,
+        image_url,
       } = req.body;
 
       // ✅ Caminho imagem
       const imagePath =
         req.file
           ? `/uploads/${req.file.filename}`
-          : null;
+          : image_url ||
+            DEFAULT_PRODUCT_IMAGE;
 
       const result =
         await pool.query(

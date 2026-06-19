@@ -27,7 +27,19 @@ export const getCart =
         getAuthHeaders()
       );
 
-    return response.data;
+    const payload = response.data || {};
+    const cart = Array.isArray(payload.cart)
+      ? payload.cart.map((item) => ({
+          ...item,
+          name: item.name ?? item.product_name,
+          price: item.price ?? item.product_price,
+        }))
+      : [];
+
+    return {
+      ...payload,
+      cart,
+    };
   };
 
 //
