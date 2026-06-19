@@ -162,13 +162,6 @@ export default function Navbar() {
                 >
                   Estoque
                 </Link>
-
-                <Link
-                  to="/products"
-                  style={link}
-                >
-                  Loja
-                </Link>
               </>
             ) : (
               <>

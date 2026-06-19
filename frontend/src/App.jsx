@@ -34,6 +34,7 @@ import ProductDetails
 
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./PrivateRoute";  
+import StoreRoute from "./components/StoreRoute";
 
 function App() {
   return (
@@ -47,7 +48,7 @@ function App() {
       {/* ✅ Produtos */}
       <Route
         path="/products"
-        element={<Products />}
+        element={<StoreRoute><Products /></StoreRoute>}
       />
 
       {/* ✅ Carrinho */}
@@ -71,7 +72,7 @@ function App() {
       {/* ✅ Detalhes do Produto */}
       <Route
         path="/products/:id"
-        element={<ProductDetails />}
+        element={<StoreRoute><ProductDetails /></StoreRoute>}
       />
 
       {/* ✅ Admin - Dashboard */}
