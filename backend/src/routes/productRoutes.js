@@ -10,6 +10,7 @@ import {
   getProductById,
   updateProduct,
   deleteProduct,
+  updateStock,
 } from "../controllers/productController.js";
 
 import {
@@ -46,6 +47,17 @@ router.post(
   adminMiddleware,
   upload.single("image"),
   createProduct
+);
+
+//
+// ✅ Atualizar estoque
+//
+
+router.patch(
+  "/:id/stock",
+  authMiddleware,
+  adminMiddleware,
+  updateStock
 );
 
 //

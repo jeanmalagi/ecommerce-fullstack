@@ -224,6 +224,46 @@ export const updateProduct =
   };
 
 //
+// ✅ Atualizar estoque
+//
+
+export const updateStock = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { stock } = req.body;
+
+    if (typeof stock !== "number" || stock < 0) {
+      return res.status(400).json({
+        error: "Valor de estoque inválido",
+      });
+    }
+
+    const result = await pool.query(
+      `
+      UPDATE products
+      SET stock = $1
+      WHERE id = $2
+      RETURNING *
+      `,
+      [stock, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        error: "Produto não encontrado",
+      });
+    }
+
+    return res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      error: "Erro ao atualizar estoque",
+    });
+  }
+};
+
+//
 // ✅ Deletar produto
 //
 
