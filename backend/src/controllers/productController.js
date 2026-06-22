@@ -151,6 +151,7 @@ export const updateProduct =
         price,
         stock,
         category,
+        image_url,
       } = req.body;
 
       // ✅ Busca produto atual
@@ -178,6 +179,8 @@ export const updateProduct =
       const imagePath =
         req.file
           ? `/uploads/${req.file.filename}`
+          : image_url
+              ? image_url
           : currentProduct.rows[0]
               .image_url;
 
