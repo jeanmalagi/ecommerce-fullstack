@@ -6,4 +6,3 @@ CREATE TABLE IF NOT EXISTS users (
   is_admin BOOLEAN DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-``
